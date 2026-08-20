@@ -20,10 +20,9 @@ Rebuild as a fresh v2. Unity phone UI, Zepp OS watch scoring, and Temp screensho
 
 ## Layer 0 — Gradle / modules
 
-- [ ] Add Kotlin to `:core` (library is Java-only today).
-- [ ] Catalog: DataStore, Hilt, Coroutines, Lifecycle ViewModel, Wear Compose already present.
-- [ ] `:app` and `:wear` `implementation(project(":core"))`.
-- [ ] Hilt plugins on root / app / wear / core.
+- [x] Add Kotlin to `:core` (library is Java-only today).
+- [x] Catalog: DataStore, Coroutines, Lifecycle ViewModel (Wear Compose already present).
+- [x] `:app` and `:wear` `implementation(project(":core"))`.
 - [x] Shared versioning (`PetanqueVersion`): `versionName` 2.0.0; `versionCode` = targetSdk × 10_000_000 + type × 1_000_000 + major × 10_000 + minor × 100 + patch (phone type 0 → 360020000, wear type 5 → 365020000).
 
 ---
@@ -32,10 +31,10 @@ Rebuild as a fresh v2. Unity phone UI, Zepp OS watch scoring, and Temp screensho
 
 Package: `nl.siwoc.petanquecounter.core.domain`
 
-- [ ] `Team` (`Nous`, `Eux`).
-- [ ] `PhoneLayout`: `ButtonsRight`, `ButtonsLeft`, `ButtonsCenter` (Temp `app-main0/1/2`).
-- [ ] `GameState(nousScore, euxScore, layout, history)` — history is snapshots for Undo.
-- [ ] Rules (pure functions, unit-tested):
+- [x] `Team` (`Nous`, `Eux`).
+- [x] `PhoneLayout`: `ButtonsRight`, `ButtonsLeft`, `ButtonsCenter` (Temp `app-main0/1/2`).
+- [x] `GameState(nousScore, euxScore, layout, history)` — history is snapshots for Undo.
+- [x] Rules (pure functions, unit-tested):
   - scores never go below 0
   - mène delta is ±1..±6
   - minus mène cannot exceed current score
@@ -70,9 +69,8 @@ Package: `nl.siwoc.petanquecounter.core.controller`
 
 ---
 
-## Layer 4 — DI + tests (`:core`)
+## Layer 4 — tests (`:core`)
 
-- [ ] Hilt: `@Singleton` DataStore, repository, controller.
 - [ ] Unit tests for domain rules + controller (mène clamp, undo stack, reset, layout cycle).
 
 ---
@@ -83,8 +81,7 @@ Package: `nl.siwoc.petanquecounter.app`
 Entry: `MainActivity`  
 Guideline: Temp `app-main0.png`, `app-main1.png`, `app-main2.png`, `app-reset.png`
 
-- [ ] `@HiltAndroidApp` + Hilt `MainActivity`.
-- [ ] `ScoreViewModel` wraps `ScoreController` (logic stays out of composables).
+- [ ] `ScoreViewModel` constructs `ScoreController` (logic stays out of composables).
 - [ ] `AppTheme` / M3 colors toward Unity: blue score panels, red/white frame, dark control well, red Reset.
 - [ ] Main screen:
   - Nous | Eux scores (gold at ≥ 13)

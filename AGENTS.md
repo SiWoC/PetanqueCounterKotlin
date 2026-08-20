@@ -38,7 +38,7 @@
 
 ## 2. Architecture & Patterns
 - **Pattern**: Follow **MVVM** or **MVI** patterns. Keep logic out of Composables and inside ViewModels.
-- **Dependency Injection**: Assume the project uses **Hilt** (unless specified otherwise).
+- **Dependency Injection**: No Hilt. Construct `ScoreController` / repository in each `ViewModel` (Application context for DataStore).
 - **State Management**: Use `StateFlow` or `MutableState` for UI state. Always prefer Unidirectional Data Flow (UDF).
 
 ## 3. Communication Style
