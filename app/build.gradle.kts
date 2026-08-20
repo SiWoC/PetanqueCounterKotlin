@@ -14,9 +14,10 @@ android {
     defaultConfig {
         applicationId = "nl.siwoc.PetanqueCounter"
         minSdk = 24
-        targetSdk = 36
-        versionCode = 200
-        versionName = "2.0.0"
+        val targetSdkApi = 36
+        targetSdk = targetSdkApi
+        versionCode = PetanqueVersion.code(targetSdkApi, PetanqueVersion.TYPE_PHONE)
+        versionName = PetanqueVersion.NAME
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }

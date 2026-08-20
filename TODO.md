@@ -24,7 +24,7 @@ Rebuild as a fresh v2. Unity phone UI, Zepp OS watch scoring, and Temp screensho
 - [ ] Catalog: DataStore, Hilt, Coroutines, Lifecycle ViewModel, Wear Compose already present.
 - [ ] `:app` and `:wear` `implementation(project(":core"))`.
 - [ ] Hilt plugins on root / app / wear / core.
-- [ ] Align Wear `versionName` with phone (`2.0.0`); give Wear a distinct `versionCode` if both ship on the same Play listing.
+- [x] Shared versioning (`PetanqueVersion`): `versionName` 2.0.0; `versionCode` = targetSdk × 10_000_000 + type × 1_000_000 + major × 10_000 + minor × 100 + patch (phone type 0 → 360020000, wear type 5 → 365020000).
 
 ---
 
