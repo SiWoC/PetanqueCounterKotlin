@@ -1,4 +1,4 @@
-package nl.siwoc.petanquecounter
+package nl.siwoc.petanquecounter.app
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -11,7 +11,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import nl.siwoc.petanquecounter.ui.theme.PetanqueCounterTheme
+import nl.siwoc.petanquecounter.app.ui.theme.PetanqueCounterTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -3,7 +3,7 @@
  * most up to date changes to the libraries and their usages.
  */
 
-package nl.siwoc.petanquecounter.presentation
+package nl.siwoc.petanquecounter.wear
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -28,9 +28,9 @@ import androidx.wear.compose.material3.lazy.transformedHeight
 import androidx.wear.compose.ui.tooling.preview.WearPreviewDevices
 import androidx.wear.compose.ui.tooling.preview.WearPreviewFontScales
 import nl.siwoc.petanquecounter.R
-import nl.siwoc.petanquecounter.presentation.theme.PetanqueCounterTheme
+import nl.siwoc.petanquecounter.wear.ui.theme.PetanqueCounterTheme
 
-class WearMainActivity : ComponentActivity() {
+class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {

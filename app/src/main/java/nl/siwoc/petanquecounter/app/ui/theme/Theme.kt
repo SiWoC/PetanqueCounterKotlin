@@ -1,4 +1,4 @@
-package nl.siwoc.petanquecounter.ui.theme
+package nl.siwoc.petanquecounter.app.ui.theme
 
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme

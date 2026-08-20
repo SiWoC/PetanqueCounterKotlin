@@ -1,4 +1,4 @@
-package nl.siwoc.petanquecounter.presentation.theme
+package nl.siwoc.petanquecounter.wear.ui.theme
 
 import androidx.compose.runtime.Composable
 import androidx.wear.compose.material3.MaterialTheme

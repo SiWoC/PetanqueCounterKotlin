@@ -1,4 +1,4 @@
-package nl.siwoc.petanquecounter
+package nl.siwoc.petanquecounter.app
 
 import org.junit.Test
 
