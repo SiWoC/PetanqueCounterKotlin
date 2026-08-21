@@ -61,17 +61,17 @@ Package: `nl.siwoc.petanquecounter.core.data`
 
 Package: `nl.siwoc.petanquecounter.core.controller`
 
-- [ ] `ScoreController` on top of the repository (UDF, no Compose):
+- [x] `ScoreController` on top of the repository (UDF, no Compose):
   - `state: StateFlow<GameState>`
   - `applyMene(team, delta)` — phone and wear
   - `undo()` / `reset()` / `cycleLayout()`
-- [ ] Expose derived flags: minus enabled, undo available, win reached.
+- [x] Expose derived flags: minus enabled, undo available, win reached.
 
 ---
 
-## Layer 4 — tests (`:core`)
+## Tests (`:core`)
 
-- [ ] Unit tests for domain rules + controller (mène clamp, undo stack, reset, layout cycle).
+- [x] Unit tests for domain rules + controller (mène clamp, undo stack, reset, layout cycle).
 
 ---
 
@@ -128,7 +128,7 @@ Guideline: Temp `wear-square-main.png`, `wear-square-mene.png`, `wear-round-main
 ## Order of work
 
 1. Layer 0 (wire modules)  
-2. Layers 1–4 (core, tests)  
+2. Layers 1–3 (core) + tests  
 3. App main + layouts + mène overlay + undo + reset  
 4. Wear main + mène overlay  
 5. Icons, privacy/about, string polish

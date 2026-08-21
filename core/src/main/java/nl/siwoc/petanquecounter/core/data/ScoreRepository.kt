@@ -51,9 +51,14 @@ class ScoreRepository internal constructor(
         .map { prefs -> prefs.toGameState() }
 
     /**
-     * Replaces the stored match with [state] so the next [state] emission matches it.
+     * Applies [transform] in one DataStore transaction so two quick taps cannot
+     * overwrite each other with a stale snapshot.
      */
-    suspend fun save(state: GameState) {
-        dataStore.updateData { state.toPreferences() }
+    suspend fun update(transform: (GameState) -> GameState) {
+        dataStore.updateData { prefs ->
+            val current = prefs.toGameState()
+            val next = transform(current)
+            if (next == current) prefs else next.toPreferences()
+        }
     }
 }
