@@ -50,10 +50,10 @@ Package: `nl.siwoc.petanquecounter.core.domain`
 
 Package: `nl.siwoc.petanquecounter.core.data`
 
-- [ ] DataStore Preferences: `nousScore`, `euxScore`, `layout`, `history`.
-- [ ] Fresh defaults only (`0`, `0`, `ButtonsCenter`, empty history).
-- [ ] `ScoreRepository`: `state: Flow<GameState>` + suspend writes.
-- [ ] History as a compact string/list in Preferences (enough for undo; not a full match log).
+- [x] DataStore Preferences: `nousScore`, `euxScore`, `layout`, `history`.
+- [x] Fresh defaults only (`0`, `0`, `ButtonsCenter`, empty history).
+- [x] `ScoreRepository`: `state: Flow<GameState>` + suspend writes.
+- [x] History as a compact string/list in Preferences (enough for undo; not a full match log).
 
 ---
 
