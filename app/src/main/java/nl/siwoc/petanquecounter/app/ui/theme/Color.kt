@@ -2,10 +2,17 @@ package nl.siwoc.petanquecounter.app.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-val Purple80 = Color(0xFFD0BCFF)
-val PurpleGrey80 = Color(0xFFCCC2DC)
-val Pink80 = Color(0xFFEFB8C8)
+/** French / Dutch flag blue for ± scoring buttons. */
+val FlagBlue = Color(0xFF0026FF)
 
-val Purple40 = Color(0xFF6650a4)
-val PurpleGrey40 = Color(0xFF625b71)
-val Pink40 = Color(0xFF7D5260)
+/** French / Dutch flag red for Reset. */
+val FlagRed = Color(0xFFC8102E)
+
+/** Control-well navy sampled from Temp `app-main0.png`. */
+val Navy = Color(0xFF314D79)
+
+/** Score color once a side has reached [nl.siwoc.petanquecounter.core.domain.GameState.WIN_SCORE]. */
+val WinGold = Color(0xFFFFC107)
+
+/** Add-mène digits on the overlay. */
+val MeneAddGreen = Color(0xFF2E7D32)

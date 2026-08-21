@@ -13,6 +13,7 @@ Rebuild as a fresh v2. Unity phone UI, Zepp OS watch scoring, and Temp screensho
 
 - Phone and Wear: ± opens a 1–6 mène overlay; Undo; Reset.
 - Phone also: 3 single-hand layouts (Unity).
+- Action icons are Material Symbols XML in `:core` (no icon library): Undo `ic_history`, Reset `ic_refresh`, Layout `ic_dashboard_customize`. Phone About: `schnappi`.
 - Wear layout: Zepp OS + Temp wear shots.
 - Each device stores its own DataStore. No cross-device sync or companion.
 
@@ -81,19 +82,19 @@ Package: `nl.siwoc.petanquecounter.app`
 Entry: `MainActivity`  
 Guideline: Temp `app-main0.png`, `app-main1.png`, `app-main2.png`, `app-reset.png`
 
-- [ ] `ScoreViewModel` constructs `ScoreController` (logic stays out of composables).
-- [ ] `AppTheme` / M3 colors toward Unity: blue score panels, red/white frame, dark control well, red Reset.
-- [ ] Main screen:
+- [x] `ScoreViewModel` constructs `ScoreController` (logic stays out of composables).
+- [x] `AppTheme` / M3 red–white–blue (flag palette); gold scores at ≥ 13; red Reset.
+- [x] Main screen:
   - Nous | Eux scores (gold at ≥ 13)
   - ± buttons placed by `PhoneLayout` — open the mène overlay (not ±1)
-  - **Undo** last mène
-  - **Reset** → bilingual confirm (FR + EN, Unity overlay)
-  - **Layout** → `cycleLayout()`
-  - mascot → About / privacy (`Temp/PrivacyPolicy.html` as copy source)
-- [ ] **Mène overlay** (same rules as wear: 1–6, green add / red subtract, clamp below 0)
-- [ ] Strings `values` + `values-fr` (app name already: Petanque Counter / Compteur de Pétanque).
+  - **Undo** last mène (`ic_history`)
+  - **Reset** → bilingual confirm (FR + EN) (`ic_refresh`)
+  - **Layout** → `cycleLayout()` (`ic_dashboard_customize`)
+- [ ] mascot (`schnappi`) → About / privacy (`Temp/PrivacyPolicy.html` as copy source)
+- [x] **Mène overlay** (same rules as wear: 1–6, green add / red subtract, clamp below 0)
+- [x] Strings `values` + `values-fr` (app name already: Petanque Counter / Compteur de Pétanque).
 - [ ] Use `Temp/icon.png` for launcher if it is the intended icon.
-- [ ] Compose previews for the three layouts + mène overlay.
+- [x] Compose previews for the three layouts + mène overlay.
 
 ---
 
@@ -109,7 +110,7 @@ Guideline: Temp `wear-square-main.png`, `wear-square-mene.png`, `wear-round-main
 - [ ] **Main score screen**
   - two columns: Nous / Eux, large scores
   - ± pair per team (blue)
-  - Undo (gray) / Reset (red)
+  - Undo (gray, `ic_history`) / Reset (red, `ic_refresh`)
   - minus disabled at 0
   - score color gold at ≥ 13
   - round: circular targets (Temp round shot); square: rounded rects (Temp square / Zepp OS)
@@ -131,4 +132,4 @@ Guideline: Temp `wear-square-main.png`, `wear-square-mene.png`, `wear-round-main
 2. Layers 1–3 (core) + tests  
 3. App main + layouts + mène overlay + undo + reset  
 4. Wear main + mène overlay  
-5. Icons, privacy/about, string polish
+5. Wear polish

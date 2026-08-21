@@ -1,3 +1,26 @@
 <resources>
     <string name="app_name">Compteur de Pétanque</string>
+    <string name="team_nous">Nous</string>
+    <string name="team_eux">Eux</string>
+    <string name="action_undo">Défaire</string>
+    <string name="action_reset">Réinitialiser</string>
+    <string name="action_layout">Disposition</string>
+    <string name="action_about">À propos</string>
+    <string name="action_exit">Quitter</string>
+    <string name="action_cancel">Annuler</string>
+    <string name="action_close">Fermer</string>
+    <string name="mene_add">Ajouter des points pour %1$s</string>
+    <string name="mene_subtract">Retirer des points pour %1$s</string>
+    <string name="mene_add_title">%1$s · +</string>
+    <string name="mene_subtract_title">%1$s · −</string>
+    <string name="mene_digit">%1$d</string>
+    <string name="reset_title">Réinitialiser les scores ?</string>
+    <string name="reset_message">Voulez-vous vraiment réinitialiser?\nDo you really want to reset?</string>
+    <string name="about_title">Pétanque Counter</string>
+    <string name="privacy_heading_en">Privacy policy</string>
+    <string name="privacy_body_en">The app Pétanque Counter does not collect and/or store any personal data. Only thing it saves is the game score and your choice of layout.</string>
+    <string name="privacy_heading_fr">Politique de confidentialité</string>
+    <string name="privacy_body_fr">Cette application Pétanque Counter ne collecte et/ou ne stocke aucune donnée personnelle. La seule chose qu\'il enregistre est le score du jeu et votre choix de mise en page.</string>
+    <string name="about_signoff">The Management</string>
+    <string name="about_email">schnappiroc@gmail.com</string>
 </resources>

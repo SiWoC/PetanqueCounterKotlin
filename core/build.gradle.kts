@@ -7,7 +7,7 @@ plugins {
 android {
     namespace = "nl.siwoc.petanquecounter.core"
     compileSdk {
-        version = release(36) {
+        version = release(37) {
             minorApiLevel = 1
         }
     }
