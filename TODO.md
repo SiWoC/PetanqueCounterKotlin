@@ -90,10 +90,10 @@ Guideline: Temp `app-main0.png`, `app-main1.png`, `app-main2.png`, `app-reset.pn
   - **Undo** last mène (`ic_history`)
   - **Reset** → bilingual confirm (FR + EN) (`ic_refresh`)
   - **Layout** → `cycleLayout()` (`ic_dashboard_customize`)
-- [ ] mascot (`schnappi`) → About / privacy (`Temp/PrivacyPolicy.html` as copy source)
+- [x] mascot (`schnappi`) → About / privacy (`Temp/PrivacyPolicy.html` as copy source)
 - [x] **Mène overlay** (same rules as wear: 1–6, green add / red subtract, clamp below 0)
 - [x] Strings `values` + `values-fr` (app name already: Petanque Counter / Compteur de Pétanque).
-- [ ] Use `Temp/icon.png` for launcher if it is the intended icon.
+- [x] Use `Temp/icon.png` for launcher if it is the intended icon.
 - [x] Compose previews for the three layouts + mène overlay.
 
 ---
