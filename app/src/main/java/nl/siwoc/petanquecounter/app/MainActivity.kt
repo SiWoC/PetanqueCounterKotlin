@@ -12,6 +12,7 @@ import nl.siwoc.petanquecounter.app.ui.theme.PetanqueCounterTheme
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setShowWhenLocked(true)
         val navy = AndroidColor.parseColor("#314D79")
         enableEdgeToEdge(
             statusBarStyle = SystemBarStyle.dark(navy),

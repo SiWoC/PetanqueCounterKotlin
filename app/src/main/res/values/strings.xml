@@ -15,12 +15,11 @@
     <string name="mene_subtract_title">%1$s · −</string>
     <string name="mene_digit">%1$d</string>
     <string name="reset_title">Reset scores?</string>
-    <string name="reset_message">Voulez-vous vraiment réinitialiser?\nDo you really want to reset?</string>
+    <string name="reset_message">Do you really want to reset?</string>
     <string name="about_title">Pétanque Counter</string>
-    <string name="privacy_heading_en">Privacy policy</string>
-    <string name="privacy_body_en">The app Pétanque Counter does not collect and/or store any personal data. Only thing it saves is the game score and your choice of layout.</string>
-    <string name="privacy_heading_fr">Politique de confidentialité</string>
-    <string name="privacy_body_fr">Cette application Pétanque Counter ne collecte et/ou ne stocke aucune donnée personnelle. La seule chose qu\'il enregistre est le score du jeu et votre choix de mise en page.</string>
-    <string name="about_signoff">The Management</string>
+    <string name="wallpaper_ware_text">This app is WallpaperWare: PostcardWare, by email.\nIf you like it and want to say thanks, send me a 3840×1600 panorama of a view you love, and tell me where it is from.</string>
+    <string name="wallpaper_ware_samples">Examples</string>
+    <string name="wallpaper_ware_samples_url" translatable="false">https://github.com/SiWoC/WallpaperWare/tree/main/samples</string>
     <string name="about_email">schnappiroc@gmail.com</string>
+    <string name="privacy_policy">Privacy policy\n\nThe app Pétanque Counter does not collect and/or store any personal data. Only thing it saves is the game score and your choice of layout.</string>
 </resources>

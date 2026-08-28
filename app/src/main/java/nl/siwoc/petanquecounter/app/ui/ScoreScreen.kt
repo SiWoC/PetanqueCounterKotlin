@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.WindowInsetsSides
 import androidx.compose.foundation.layout.fillMaxSize
@@ -59,7 +60,7 @@ import nl.siwoc.petanquecounter.core.domain.Team
 private val AppButtonShape = RoundedCornerShape(16.dp)
 
 /**
- * Wires [ScoreViewModel] to [ScoreScreen], the mène overlay, and dialogs.
+ * Wires [ScoreViewModel] to [ScoreScreen], the mène and About overlays, and dialogs.
  *
  * @param onExit Closes the hosting activity.
  */
@@ -96,6 +97,9 @@ fun ScoreRoute(
                 onDismiss = { mene = null },
             )
         }
+        if (showAbout) {
+            AboutOverlay(onDismiss = { showAbout = false })
+        }
     }
     if (showReset) {
         ResetConfirmDialog(
@@ -106,14 +110,11 @@ fun ScoreRoute(
             onDismiss = { showReset = false },
         )
     }
-    if (showAbout) {
-        AboutDialog(onDismiss = { showAbout = false })
-    }
 }
 
 /**
- * Match board: full-screen navy, flag arches from [R.drawable.app_background]
- * (the gap is transparent), white scores (gold at ≥ 13), flag-blue ±, actions.
+ * Match board: navy column. Flag arches from [R.drawable.app_background] fill
+ * the score band (the slit is transparent), then ±, then actions.
  *
  * @param state Current match.
  * @param onPlus Opens an add-mène picker for that side.
@@ -136,47 +137,62 @@ fun ScoreScreen(
     onExit: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    Box(
+    Column(
         modifier
             .fillMaxSize()
-            .windowInsetsPadding(WindowInsets.statusBars),
+            .background(Navy)
+            .windowInsetsPadding(WindowInsets.statusBars)
+            .windowInsetsPadding(
+                WindowInsets.safeDrawing.only(
+                    WindowInsetsSides.Horizontal + WindowInsetsSides.Bottom,
+                ),
+            ),
     ) {
-        Box(
-            Modifier
-                .fillMaxSize()
-                .background(Navy),
-        )
-        Image(
-            painter = painterResource(R.drawable.app_background),
-            contentDescription = null,
-            modifier = Modifier.fillMaxSize(),
-            contentScale = ContentScale.FillBounds,
-        )
         Column(
             Modifier
-                .fillMaxSize()
-                .windowInsetsPadding(
-                    WindowInsets.safeDrawing.only(
-                        WindowInsetsSides.Horizontal + WindowInsetsSides.Bottom,
-                    ),
-                ),
+                .fillMaxWidth()
+                .weight(1f),
         ) {
-            Scoreboard(
-                state = state,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(0.4f)
-                    .padding(horizontal = 12.dp),
-            )
+            Box(Modifier.fillMaxWidth()) {
+                Image(
+                    painter = painterResource(R.drawable.app_background),
+                    contentDescription = null,
+                    modifier = Modifier.fillMaxWidth(),
+                    contentScale = ContentScale.FillWidth,
+                )
+                Scoreboard(
+                    state = state,
+                    modifier = Modifier
+                        .matchParentSize()
+                        .padding(horizontal = 12.dp),
+                )
+                FilledTonalIconButton(
+                    onClick = onExit,
+                    modifier = Modifier
+                        .align(Alignment.TopEnd)
+                        .padding(8.dp)
+                        .size(48.dp),
+                    shape = AppButtonShape,
+                    colors = IconButtonDefaults.filledTonalIconButtonColors(
+                        containerColor = MaterialTheme.colorScheme.surfaceVariant,
+                        contentColor = Color.White,
+                    ),
+                ) {
+                    Icon(
+                        painter = painterResource(CoreR.drawable.ic_close),
+                        contentDescription = stringResource(R.string.action_exit),
+                    )
+                }
+            }
             Box(
                 modifier = Modifier
+                    .weight(1f)
                     .fillMaxWidth()
-                    .weight(0.45f)
-                    .padding(horizontal = 12.dp),
+                    .padding(start = 16.dp, top = 50.dp, end = 16.dp),
                 contentAlignment = when (state.layout) {
-                    PhoneLayout.ButtonsLeft -> Alignment.CenterStart
-                    PhoneLayout.ButtonsRight -> Alignment.CenterEnd
-                    PhoneLayout.ButtonsCenter -> Alignment.Center
+                    PhoneLayout.ButtonsLeft -> Alignment.TopStart
+                    PhoneLayout.ButtonsRight -> Alignment.TopEnd
+                    PhoneLayout.ButtonsCenter -> Alignment.TopCenter
                 },
             ) {
                 MenePad(
@@ -185,34 +201,17 @@ fun ScoreScreen(
                     onMinus = onMinus,
                 )
             }
-            ActionRow(
-                canUndo = state.canUndo(),
-                onUndo = onUndo,
-                onReset = onReset,
-                onCycleLayout = onCycleLayout,
-                onAbout = onAbout,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(start = 12.dp, end = 12.dp, bottom = 8.dp),
-            )
         }
-        FilledTonalIconButton(
-            onClick = onExit,
+        ActionRow(
+            canUndo = state.canUndo(),
+            onUndo = onUndo,
+            onReset = onReset,
+            onCycleLayout = onCycleLayout,
+            onAbout = onAbout,
             modifier = Modifier
-                .align(Alignment.TopEnd)
-                .padding(8.dp)
-                .size(48.dp),
-            shape = AppButtonShape,
-            colors = IconButtonDefaults.filledTonalIconButtonColors(
-                containerColor = MaterialTheme.colorScheme.surfaceVariant,
-                contentColor = Color.White,
-            ),
-        ) {
-            Icon(
-                painter = painterResource(CoreR.drawable.ic_close),
-                contentDescription = stringResource(R.string.action_exit),
-            )
-        }
+                .fillMaxWidth()
+                .padding(start = 12.dp, end = 12.dp, bottom = 16.dp),
+        )
     }
 }
 
@@ -453,7 +452,7 @@ private fun ActionRow(
     }
 }
 
-@Preview(showBackground = true, widthDp = 360, heightDp = 740)
+@Preview(showBackground = true, widthDp = 360, heightDp = 740, locale = "fr")
 @Composable
 private fun ScoreScreenRightPreview() {
     PetanqueCounterTheme {

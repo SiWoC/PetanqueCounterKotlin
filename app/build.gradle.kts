@@ -13,7 +13,7 @@ android {
 
     defaultConfig {
         applicationId = "nl.siwoc.PetanqueCounter"
-        minSdk = 24
+        minSdk = 27
         val targetSdkApi = 36
         targetSdk = targetSdkApi
         versionCode = PetanqueVersion.code(targetSdkApi, PetanqueVersion.TYPE_PHONE)
