@@ -102,27 +102,27 @@ Guideline: Temp `app-main0.png`, `app-main1.png`, `app-main2.png`, `app-reset.pn
 
 Package: `nl.siwoc.petanquecounter.wear`  
 Entry: `MainActivity`  
-Guideline: Temp `wear-square-main.png`, `wear-square-mene.png`, `wear-round-main.jfif` + Zepp OS `page/index` + `page/mene`
+Guideline: Temp `wear-round-main.jfif`, `wear-square-mene.png`
 
-- [ ] Manifest `android:name=".wear.MainActivity"`; keep standalone.
-- [ ] Theme under `nl.siwoc.petanquecounter.wear.ui.theme`.
-- [ ] `ScoreViewModel` wraps the same `ScoreController`.
-- [ ] **Main score screen**
+- [x] Manifest `android:name=".wear.MainActivity"`; keep standalone.
+- [x] Theme under `nl.siwoc.petanquecounter.wear.ui.theme`.
+- [x] `ScoreViewModel` wraps the same `ScoreController`.
+- [x] **Main score screen**
   - two columns: Nous / Eux, large scores
   - ± pair per team (blue)
   - Undo (gray, `ic_history`) / Reset (red, `ic_refresh`)
   - minus disabled at 0
   - score color gold at ≥ 13
-  - round: circular targets (Temp round shot); square: rounded rects (Temp square / Zepp OS)
-- [ ] **Mène overlay** (`wear-square-mene.png`)
+  - round: circular targets (Temp round shot)
+- [x] **Mène overlay** (Layout A)
   - title `{Nous|Eux} · {+|−}`
-  - 2×3 grid 1–6; green add / red subtract
+  - 6 circles clockwise from 1 o'clock; green add / red subtract
   - disable digits that would go below 0
-  - **Retour** / Back cancels
-- [ ] Reset: confirm dialog (visible Reset button on Wear shots).
-- [ ] Undo: toast when history is empty (Zepp OS `undo_empty`).
-- [ ] i18n EN + FR (`Nous`, `Eux`, Undo, Reset, Retour, confirm copy).
-- [ ] Wear Compose previews for round and square.
+  - **Retour** / Back cancels in the middle of the 6 circles
+- [x] Reset: confirm dialog (Yes/No, Oui/Non)
+- [x] Undo: disabled when history is empty
+- [x] i18n EN + FR (`Nous`, `Eux`, Undo, Reset, Retour).
+- [x] Wear Compose previews for round.
 
 ---
 
@@ -133,3 +133,7 @@ Guideline: Temp `wear-square-main.png`, `wear-square-mene.png`, `wear-round-main
 3. App main + layouts + mène overlay + undo + reset  
 4. Wear main + mène overlay  
 5. Wear polish
+
+## Polish
+
+- Nous/Eux on the bezel — curved labels like the mène title

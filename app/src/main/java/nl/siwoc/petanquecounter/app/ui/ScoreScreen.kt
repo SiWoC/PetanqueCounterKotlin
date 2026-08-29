@@ -52,6 +52,7 @@ import nl.siwoc.petanquecounter.app.ui.theme.Navy
 import nl.siwoc.petanquecounter.app.ui.theme.WinGold
 import nl.siwoc.petanquecounter.core.R as CoreR
 import nl.siwoc.petanquecounter.core.domain.GameState
+import nl.siwoc.petanquecounter.core.domain.MeneRequest
 import nl.siwoc.petanquecounter.core.domain.PhoneLayout
 import nl.siwoc.petanquecounter.core.domain.ScoreSnapshot
 import nl.siwoc.petanquecounter.core.domain.Team

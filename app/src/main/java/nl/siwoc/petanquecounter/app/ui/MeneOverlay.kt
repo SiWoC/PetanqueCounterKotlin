@@ -32,6 +32,7 @@ import nl.siwoc.petanquecounter.app.ui.theme.FlagRed
 import nl.siwoc.petanquecounter.app.ui.theme.MeneAddGreen
 import nl.siwoc.petanquecounter.app.ui.theme.Navy
 import nl.siwoc.petanquecounter.app.ui.theme.PetanqueCounterTheme
+import nl.siwoc.petanquecounter.core.domain.MeneRequest
 import nl.siwoc.petanquecounter.core.domain.Team
 
 /** Dim behind the mène card so the board stays visible but not tappable. */

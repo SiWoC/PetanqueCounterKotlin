@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Compteur de Pétanque</string>
+    <string name="team_nous">Nous</string>
+    <string name="team_eux">Eux</string>
+    <string name="action_undo">Défaire</string>
+    <string name="action_reset">Réinitialiser</string>
+    <string name="action_back">Retour</string>
+    <string name="action_yes">Oui</string>
+    <string name="action_no">Non</string>
+    <string name="mene_add">Ajouter des points pour %1$s</string>
+    <string name="mene_subtract">Retirer des points pour %1$s</string>
+    <string name="mene_add_title">%1$s · +</string>
+    <string name="mene_subtract_title">%1$s · −</string>
+    <string name="mene_digit">%1$d</string>
+    <string name="reset_title">Réinitialiser les scores ?</string>
+    <string name="reset_message">Voulez-vous vraiment réinitialiser?</string>
+</resources>
