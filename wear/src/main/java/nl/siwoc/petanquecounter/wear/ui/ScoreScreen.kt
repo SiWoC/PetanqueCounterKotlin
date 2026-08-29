@@ -6,9 +6,11 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -20,6 +22,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
@@ -32,12 +35,22 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.wear.compose.foundation.AnchorType
+import androidx.wear.compose.foundation.CurvedAlignment
+import androidx.wear.compose.foundation.CurvedLayout
+import androidx.wear.compose.foundation.CurvedModifier
+import androidx.wear.compose.foundation.angularSize
+import androidx.wear.compose.foundation.background as curvedBackground
+import androidx.wear.compose.foundation.curvedBox
+import androidx.wear.compose.foundation.padding as curvedPadding
+import androidx.wear.compose.foundation.radialSize
 import androidx.wear.compose.material3.FilledIconButton
 import androidx.wear.compose.material3.FilledTonalIconButton
 import androidx.wear.compose.material3.Icon
 import androidx.wear.compose.material3.IconButtonDefaults
 import androidx.wear.compose.material3.MaterialTheme
 import androidx.wear.compose.material3.Text
+import androidx.wear.compose.material3.curvedText
 import androidx.wear.compose.ui.tooling.preview.WearPreviewLargeRound
 import androidx.wear.compose.ui.tooling.preview.WearPreviewSmallRound
 import nl.siwoc.petanquecounter.R
@@ -52,6 +65,12 @@ import nl.siwoc.petanquecounter.wear.ui.theme.FlagRed
 import nl.siwoc.petanquecounter.wear.ui.theme.Navy
 import nl.siwoc.petanquecounter.wear.ui.theme.PetanqueCounterTheme
 import nl.siwoc.petanquecounter.wear.ui.theme.WinGold
+
+/** 11 o'clock — center of the left (Nous) half of the top arc. */
+private const val NousBezelAnchor = 240f
+
+/** 1 o'clock — center of the right (Eux) half of the top arc. */
+private const val EuxBezelAnchor = 300f
 
 /**
  * Wires [ScoreViewModel] to [ScoreScreen], the mène overlay, and reset confirm.
@@ -96,7 +115,7 @@ fun ScoreRoute(
 }
 
 /**
- * Round match board: Nous | Eux, ± per side, Undo and Reset.
+ * Round match board: Nous | Eux on the bezel, large scores, ± per side, Undo and Reset.
  *
  * @param state Current match.
  * @param onPlus Opens an add-mène picker for that side.
@@ -123,7 +142,13 @@ fun ScoreScreen(
         val actionButtonSize = minOf(size * 0.16f, IconButtonDefaults.ExtraSmallButtonSize)
         val actionIconSize = IconButtonDefaults.iconSizeFor(actionButtonSize)
         val scoreSp = (size * 0.20f).value.sp
-        val labelSp = (size * 0.06f).value.sp
+        val labelSp = (size * 0.065f).value.sp
+
+        BezelTeamLabels(
+            nous = stringResource(R.string.team_nous),
+            eux = stringResource(R.string.team_eux),
+            fontSize = labelSp,
+        )
 
         Column(
             modifier = Modifier
@@ -133,8 +158,10 @@ fun ScoreScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Row(
-                modifier = Modifier.fillMaxWidth(0.85f),
-                horizontalArrangement = Arrangement.SpaceEvenly,
+                modifier = Modifier
+                    .fillMaxWidth(0.85f)
+                    // Offset, not padding: SpaceBetween would push the ± row down.
+                    .offset(y = size * 0.06f),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 ScoreColumn(
@@ -142,14 +169,12 @@ fun ScoreScreen(
                     score = state.nousScore,
                     winReached = state.isWinReached(Team.Nous),
                     scoreSp = scoreSp,
-                    labelSp = labelSp,
                 )
                 ScoreColumn(
                     teamName = stringResource(R.string.team_eux),
                     score = state.euxScore,
                     winReached = state.isWinReached(Team.Eux),
                     scoreSp = scoreSp,
-                    labelSp = labelSp,
                 )
             }
             Row(
@@ -207,24 +232,111 @@ fun ScoreScreen(
     }
 }
 
+/**
+ * Nous / Eux on the top bezel, each centered over its 50% column (240° / 300°).
+ * A short arc at 12 o'clock separates the two sides.
+ */
 @Composable
-private fun ScoreColumn(
+private fun BezelTeamLabels(
+    nous: String,
+    eux: String,
+    fontSize: TextUnit,
+) {
+    val textPadding = CurvedModifier.curvedPadding(
+        outer = 6.dp,
+        inner = 0.dp,
+        before = 0.dp,
+        after = 0.dp,
+    )
+    val ringThickness = 3.dp
+    val ringColor = Color.White.copy(alpha = 0.35f)
+
+    CurvedLayout(
+        modifier = Modifier.fillMaxSize(),
+        anchor = 205f,
+        anchorType = AnchorType.Center,
+        radialAlignment = CurvedAlignment.Radial.Outer,
+    ) {
+        curvedBox(
+            modifier = CurvedModifier
+                .curvedPadding(outer = 10.dp, inner = 0.dp, before = 0.dp, after = 0.dp)
+                .angularSize(36f)
+                .radialSize(ringThickness)
+                .curvedBackground(ringColor, cap = StrokeCap.Round),
+        ) {}
+    }
+    CurvedLayout(
+        modifier = Modifier.fillMaxSize(),
+        anchor = NousBezelAnchor,
+        anchorType = AnchorType.Center,
+        radialAlignment = CurvedAlignment.Radial.Outer,
+    ) {
+        curvedText(
+            text = nous,
+            modifier = textPadding,
+            fontSize = fontSize,
+            color = Color.White,
+        )
+    }
+    CurvedLayout(
+        modifier = Modifier.fillMaxSize(),
+        anchor = 270f,
+        anchorType = AnchorType.Center,
+        radialAlignment = CurvedAlignment.Radial.Outer,
+    ) {
+        curvedBox(
+            modifier = CurvedModifier
+                .curvedPadding(outer = 10.dp, inner = 0.dp, before = 6.dp, after = 0.dp)
+                .angularSize(30f)
+                .radialSize(ringThickness)
+                .curvedBackground(ringColor, cap = StrokeCap.Round),
+        ) {}
+    }
+    CurvedLayout(
+        modifier = Modifier.fillMaxSize(),
+        anchor = EuxBezelAnchor,
+        anchorType = AnchorType.Center,
+        radialAlignment = CurvedAlignment.Radial.Outer,
+    ) {
+        curvedText(
+            text = eux,
+            modifier = textPadding,
+            fontSize = fontSize,
+            color = Color.White,
+        )
+    }
+    CurvedLayout(
+        modifier = Modifier.fillMaxSize(),
+        anchor = 333f,
+        anchorType = AnchorType.Center,
+        radialAlignment = CurvedAlignment.Radial.Outer,
+    ) {
+        curvedBox(
+            modifier = CurvedModifier
+                .curvedPadding(outer = 10.dp, inner = 0.dp, before = 0.dp, after = 0.dp)
+                .angularSize(40f)
+                .radialSize(ringThickness)
+                .curvedBackground(ringColor, cap = StrokeCap.Round),
+        ) {}
+    }
+}
+
+@Composable
+private fun RowScope.ScoreColumn(
     teamName: String,
     score: Int,
     winReached: Boolean,
     scoreSp: TextUnit,
-    labelSp: TextUnit,
 ) {
-    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-        Text(
-            text = teamName.uppercase(),
-            style = MaterialTheme.typography.labelSmall,
-            fontSize = labelSp,
-            color = Color.White,
-            textAlign = TextAlign.Center,
-        )
+    Column(
+        modifier = Modifier.weight(1f),
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
         Text(
             text = score.toString(),
+            modifier = Modifier.semantics {
+                contentDescription = "$teamName $score"
+            },
             style = MaterialTheme.typography.displayMedium,
             fontWeight = FontWeight.Bold,
             fontSize = scoreSp,

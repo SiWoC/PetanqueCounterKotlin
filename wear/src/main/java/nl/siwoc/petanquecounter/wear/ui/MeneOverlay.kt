@@ -95,6 +95,7 @@ private fun MeneOverlayContent(
         val hubSize = size * 0.22f
         val hubIconSize = IconButtonDefaults.iconSizeFor(hubSize)
         val ringRadius = size * 0.29f
+        val labelSp = (size * 0.065f).value.sp
 
         CurvedLayout(
             modifier = Modifier.fillMaxSize(),
@@ -109,7 +110,7 @@ private fun MeneOverlayContent(
                     before = 0.dp,
                     after = 0.dp,
                 ),
-                fontSize = 13.sp,
+                fontSize = labelSp,
                 color = Color.White,
             )
         }

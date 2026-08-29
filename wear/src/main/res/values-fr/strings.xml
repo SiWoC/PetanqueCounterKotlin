@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Compteur de Pétanque</string>
-    <string name="team_nous">Nous</string>
-    <string name="team_eux">Eux</string>
+    <string name="team_nous">NOUS</string>
+    <string name="team_eux">EUX</string>
     <string name="action_undo">Défaire</string>
     <string name="action_reset">Réinitialiser</string>
     <string name="action_back">Retour</string>
