@@ -88,6 +88,7 @@ fun ScoreRoute(
         )
         mene?.let { request ->
             MeneOverlay(
+                state = state,
                 request = request,
                 currentScore = state.score(request.team),
                 onDigit = { digit ->

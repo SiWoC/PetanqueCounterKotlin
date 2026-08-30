@@ -134,6 +134,3 @@ Guideline: Temp `wear-round-main.jfif`, `wear-square-mene.png`
 4. Wear main + mène overlay  
 5. Wear polish
 
-## Polish
-
-- Nous/Eux on the bezel — curved labels like the mène title

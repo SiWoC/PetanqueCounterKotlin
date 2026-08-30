@@ -32,7 +32,9 @@ import nl.siwoc.petanquecounter.app.ui.theme.FlagRed
 import nl.siwoc.petanquecounter.app.ui.theme.MeneAddGreen
 import nl.siwoc.petanquecounter.app.ui.theme.Navy
 import nl.siwoc.petanquecounter.app.ui.theme.PetanqueCounterTheme
+import nl.siwoc.petanquecounter.core.domain.GameState
 import nl.siwoc.petanquecounter.core.domain.MeneRequest
+import nl.siwoc.petanquecounter.core.domain.PhoneLayout
 import nl.siwoc.petanquecounter.core.domain.Team
 
 /** Dim behind the mène card so the board stays visible but not tappable. */
@@ -50,6 +52,7 @@ private val OverlayScrim = Color.Black.copy(alpha = 0.45f)
  */
 @Composable
 fun MeneOverlay(
+    state: GameState,
     request: MeneRequest,
     currentScore: Int,
     onDigit: (Int) -> Unit,
@@ -64,6 +67,12 @@ fun MeneOverlay(
     } else {
         stringResource(R.string.mene_subtract_title, teamName)
     }
+    val cardWidthFraction = if (state.layout == PhoneLayout.ButtonsCenter) 1f else 0.66f
+    val boxAlignment = when (state.layout) {
+        PhoneLayout.ButtonsCenter -> Alignment.Center
+        PhoneLayout.ButtonsLeft -> Alignment.CenterStart
+        PhoneLayout.ButtonsRight -> Alignment.CenterEnd
+    }
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -73,11 +82,12 @@ fun MeneOverlay(
                 indication = null,
                 onClick = onDismiss,
             ),
-        contentAlignment = Alignment.Center,
+        contentAlignment = boxAlignment,
     ) {
         Card(
             modifier = Modifier
                 .padding(horizontal = 24.dp)
+                .fillMaxWidth(cardWidthFraction)
                 .clickable(
                     interactionSource = remember { MutableInteractionSource() },
                     indication = null,
@@ -97,18 +107,42 @@ fun MeneOverlay(
                     modifier = Modifier.fillMaxWidth(),
                     verticalArrangement = Arrangement.spacedBy(12.dp),
                 ) {
-                    MeneDigitRow(
-                        digits = listOf(1, 2, 3),
-                        add = request.add,
-                        currentScore = currentScore,
-                        onDigit = onDigit,
-                    )
-                    MeneDigitRow(
-                        digits = listOf(4, 5, 6),
-                        add = request.add,
-                        currentScore = currentScore,
-                        onDigit = onDigit,
-                    )
+                    when (state.layout) {
+                        PhoneLayout.ButtonsCenter -> {
+                            MeneDigitRow(
+                                digits = listOf(1, 2, 3),
+                                add = request.add,
+                                currentScore = currentScore,
+                                onDigit = onDigit,
+                            )
+                            MeneDigitRow(
+                                digits = listOf(4, 5, 6),
+                                add = request.add,
+                                currentScore = currentScore,
+                                onDigit = onDigit,
+                            )
+                        }
+                        PhoneLayout.ButtonsLeft, PhoneLayout.ButtonsRight -> {
+                            MeneDigitRow(
+                                digits = listOf(1, 2),
+                                add = request.add,
+                                currentScore = currentScore,
+                                onDigit = onDigit,
+                            )
+                            MeneDigitRow(
+                                digits = listOf(3, 4),
+                                add = request.add,
+                                currentScore = currentScore,
+                                onDigit = onDigit,
+                            )
+                            MeneDigitRow(
+                                digits = listOf(5, 6),
+                                add = request.add,
+                                currentScore = currentScore,
+                                onDigit = onDigit,
+                            )
+                        }
+                    }
                 }
             }
         }
@@ -147,9 +181,9 @@ private fun MeneDigitRow(
     }
 }
 
-@Preview(showBackground = true, widthDp = 360, heightDp = 740)
+@Preview(widthDp = 360, heightDp = 400)
 @Composable
-private fun MeneOverlayAddPreview() {
+private fun MeneOverlayAddCenterPreview() {
     PetanqueCounterTheme {
         Box(
             Modifier
@@ -157,6 +191,11 @@ private fun MeneOverlayAddPreview() {
                 .background(Navy),
         ) {
             MeneOverlay(
+                state = GameState(
+                    nousScore = 4,
+                    euxScore = 2,
+                    layout = PhoneLayout.ButtonsCenter,
+                ),
                 request = MeneRequest(Team.Nous, add = true),
                 currentScore = 4,
                 onDigit = {},
@@ -166,7 +205,31 @@ private fun MeneOverlayAddPreview() {
     }
 }
 
-@Preview(showBackground = true, widthDp = 360, heightDp = 740)
+@Preview(widthDp = 360, heightDp = 400)
+@Composable
+private fun MeneOverlayAddLeftPreview() {
+    PetanqueCounterTheme {
+        Box(
+            Modifier
+                .fillMaxSize()
+                .background(Navy),
+        ) {
+            MeneOverlay(
+                state = GameState(
+                    nousScore = 4,
+                    euxScore = 2,
+                    layout = PhoneLayout.ButtonsLeft,
+                ),
+                request = MeneRequest(Team.Nous, add = true),
+                currentScore = 4,
+                onDigit = {},
+                onDismiss = {},
+            )
+        }
+    }
+}
+
+@Preview(widthDp = 360, heightDp = 400)
 @Composable
 private fun MeneOverlaySubtractPreview() {
     PetanqueCounterTheme {
@@ -176,6 +239,11 @@ private fun MeneOverlaySubtractPreview() {
                 .background(Navy),
         ) {
             MeneOverlay(
+                state = GameState(
+                    nousScore = 4,
+                    euxScore = 2,
+                    layout = PhoneLayout.ButtonsRight,
+                ),
                 request = MeneRequest(Team.Eux, add = false),
                 currentScore = 2,
                 onDigit = {},
