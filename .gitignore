@@ -10,4 +10,7 @@
 .cxx
 local.properties
 /Temp/
+*.aab
+/app/release/
+/wear/release/
 StoreAssets/Thumbs.db

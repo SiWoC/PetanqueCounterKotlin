@@ -12,6 +12,16 @@ object PetanqueVersion {
     /** User-visible product version; same on phone and Wear. */
     val NAME: String = "$MAJOR.$MINOR.$PATCH"
 
+    /**
+     * AAB/APK archive stem, e.g. `PetanqueCounter_2_0_0` or `PetanqueCounter_2_0_0_wear`.
+     *
+     * @param wear `true` for the Wear module so phone and watch files do not collide.
+     */
+    fun archivesName(wear: Boolean): String {
+        val stem = "PetanqueCounter_${MAJOR}_${MINOR}_${PATCH}"
+        return if (wear) "${stem}_wear" else stem
+    }
+
     /** Phone APK type digit (must stay below [TYPE_WEAR]). */
     const val TYPE_PHONE = 0
 
