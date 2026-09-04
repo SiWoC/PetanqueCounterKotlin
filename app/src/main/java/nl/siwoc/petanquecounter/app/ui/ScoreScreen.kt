@@ -4,6 +4,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
@@ -12,6 +13,7 @@ import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.WindowInsetsSides
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
@@ -40,6 +42,7 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -59,6 +62,25 @@ import nl.siwoc.petanquecounter.core.domain.Team
 
 /** Rounded square for ± and action keys (not M3's circular icon-button). */
 private val AppButtonShape = RoundedCornerShape(16.dp)
+
+private val MeneKeySize = 72.dp
+
+/** Vertical gap between one-hand (two-row) ± rows. */
+private val MenePadColumnSpacing = 12.dp
+
+/** Space between the scoreboard art and the ± pad. */
+private val ArtToPadGapMin = 16.dp
+
+private val ArtToPadGapMax = 48.dp
+
+/** Wrap-content height of [MenePad] for the current one-hand vs center layout. */
+private fun menePadHeight(layout: PhoneLayout): Dp =
+    when (layout) {
+        PhoneLayout.ButtonsCenter -> MeneKeySize
+        PhoneLayout.ButtonsLeft,
+        PhoneLayout.ButtonsRight,
+        -> MeneKeySize * 2 + MenePadColumnSpacing
+    }
 
 /**
  * Wires [ScoreViewModel] to [ScoreScreen], the mène and About overlays, and dialogs.
@@ -150,58 +172,83 @@ fun ScoreScreen(
                 ),
             ),
     ) {
-        Column(
+        BoxWithConstraints(
             Modifier
                 .fillMaxWidth()
                 .weight(1f),
         ) {
-            Box(Modifier.fillMaxWidth()) {
-                Image(
-                    painter = painterResource(R.drawable.app_background),
-                    contentDescription = null,
-                    modifier = Modifier.fillMaxWidth(),
-                    contentScale = ContentScale.FillWidth,
-                )
-                Scoreboard(
-                    state = state,
-                    modifier = Modifier
-                        .matchParentSize()
-                        .padding(horizontal = 12.dp),
-                )
-                FilledTonalIconButton(
-                    onClick = onExit,
-                    modifier = Modifier
-                        .align(Alignment.TopEnd)
-                        .padding(8.dp)
-                        .size(48.dp),
-                    shape = AppButtonShape,
-                    colors = IconButtonDefaults.filledTonalIconButtonColors(
-                        containerColor = MaterialTheme.colorScheme.surfaceVariant,
-                        contentColor = Color.White,
-                    ),
+            val painter = painterResource(R.drawable.app_background)
+            val src = painter.intrinsicSize
+            val naturalHeight =
+                if (src.width.isFinite() && src.width > 0f && src.height.isFinite()) {
+                    maxWidth * (src.height / src.width)
+                } else {
+                    maxHeight
+                }
+            val padHeight = menePadHeight(state.layout)
+            // Art uses its aspect-ratio height unless the pad would be crushed;
+            // then Crop eats the bottom. 16.dp min above and below the pad;
+            // gap between art and pad stays 16–48.dp.
+            val imageHeight = minOf(
+                naturalHeight,
+                (maxHeight - padHeight - ArtToPadGapMin * 2).coerceAtLeast(0.dp),
+            )
+            val gap = (maxHeight - imageHeight - padHeight - ArtToPadGapMin)
+                .coerceIn(ArtToPadGapMin, ArtToPadGapMax)
+            Column(Modifier.fillMaxSize()) {
+                Box(
+                    Modifier
+                        .fillMaxWidth()
+                        .height(imageHeight),
                 ) {
-                    Icon(
-                        painter = painterResource(CoreR.drawable.ic_close),
-                        contentDescription = stringResource(R.string.action_exit),
+                    Image(
+                        painter = painter,
+                        contentDescription = null,
+                        modifier = Modifier.fillMaxSize(),
+                        contentScale = ContentScale.Crop,
+                        alignment = Alignment.TopCenter,
+                    )
+                    Scoreboard(
+                        state = state,
+                        modifier = Modifier
+                            .matchParentSize()
+                            .padding(horizontal = 12.dp),
+                    )
+                    FilledTonalIconButton(
+                        onClick = onExit,
+                        modifier = Modifier
+                            .align(Alignment.TopEnd)
+                            .padding(8.dp)
+                            .size(48.dp),
+                        shape = AppButtonShape,
+                        colors = IconButtonDefaults.filledTonalIconButtonColors(
+                            containerColor = MaterialTheme.colorScheme.surfaceVariant,
+                            contentColor = Color.White,
+                        ),
+                    ) {
+                        Icon(
+                            painter = painterResource(CoreR.drawable.ic_close),
+                            contentDescription = stringResource(R.string.action_exit),
+                        )
+                    }
+                }
+                Spacer(Modifier.height(gap))
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp),
+                    contentAlignment = when (state.layout) {
+                        PhoneLayout.ButtonsLeft -> Alignment.TopStart
+                        PhoneLayout.ButtonsRight -> Alignment.TopEnd
+                        PhoneLayout.ButtonsCenter -> Alignment.TopCenter
+                    },
+                ) {
+                    MenePad(
+                        state = state,
+                        onPlus = onPlus,
+                        onMinus = onMinus,
                     )
                 }
-            }
-            Box(
-                modifier = Modifier
-                    .weight(1f)
-                    .fillMaxWidth()
-                    .padding(start = 16.dp, top = 50.dp, end = 16.dp),
-                contentAlignment = when (state.layout) {
-                    PhoneLayout.ButtonsLeft -> Alignment.TopStart
-                    PhoneLayout.ButtonsRight -> Alignment.TopEnd
-                    PhoneLayout.ButtonsCenter -> Alignment.TopCenter
-                },
-            ) {
-                MenePad(
-                    state = state,
-                    onPlus = onPlus,
-                    onMinus = onMinus,
-                )
             }
         }
         ActionRow(
@@ -298,13 +345,13 @@ private fun MenePad(
             }
         }
         PhoneLayout.ButtonsLeft -> {
-            Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+            Column(verticalArrangement = Arrangement.spacedBy(MenePadColumnSpacing)) {
                 nousRow()
                 euxRow()
             }
         }
         PhoneLayout.ButtonsRight -> {
-            Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+            Column(verticalArrangement = Arrangement.spacedBy(MenePadColumnSpacing)) {
                 euxRow()
                 nousRow()
             }
@@ -351,7 +398,7 @@ private fun MeneKey(
         onClick = onClick,
         enabled = enabled,
         modifier = Modifier
-            .size(72.dp)
+            .size(MeneKeySize)
             .semantics { contentDescription = description },
         shape = AppButtonShape,
         colors = IconButtonDefaults.filledIconButtonColors(
