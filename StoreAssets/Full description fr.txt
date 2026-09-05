@@ -1,0 +1,15 @@
+Name: Compteur de Pétanque
+
+Short desc: Gardez le score de pétanque sur téléphone et/ou montre
+
+Full desc:
+De nos jours, vous avez toujours votre téléphone ou smartwatch Wear OS avec vous, pourquoi ne pas l'utiliser pour garder le score.
+- interface simple
+- plusieurs dispositions pour téléphone (symétriques, une main gauche, une main droite)
+- reste au-dessus/à l'extérieur de l'écran de verrouillage du téléphone pour un accès simple
+- Wear OS : compteur autonome, 1 à 6 points par mène
+
+Cette appli est du WallpaperWare : le PostcardWare par e-mail.
+Si elle vous plaît et que vous voulez le montrer, envoyez-moi un panorama 3840×1600 d’un paysage que vous aimez, en indiquant d’où il vient.
+schnappiroc@gmail.com
+Exemples : https://github.com/SiWoC/WallpaperWare/tree/main/samples

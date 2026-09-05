@@ -1,0 +1,15 @@
+Name: Pétanque punten teller
+
+Short desc: Houd de pétanque-stand bij op telefoon en/of smartwatch
+
+Full desc:
+Omdat je tegenwoordig altijd je telefoon of Wear OS smartwatch bij je hebt, waarom die dan niet gebruiken om de stand bij te houden.
+- simpele interface
+- meerdere telefoon lay-outs (symmetrisch, één-hand-links, één-hand-rechts)
+- blijft boven/buiten het vergrendelscherm van de telefoon, dus makkelijk toegankelijk
+- Wear OS: zelfstandige teller, 1–6 punten per mène
+
+Deze app is WallpaperWare: PostcardWare, per e-mail.
+Als hij je bevalt en je dat wilt laten merken, stuur me dan een panorama van 3840×1600 van een uitzicht dat je mooi vindt, en vermeld waar het vandaan komt.
+schnappiroc@gmail.com
+Voorbeelden: https://github.com/SiWoC/WallpaperWare/tree/main/samples

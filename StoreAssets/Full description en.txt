@@ -1,0 +1,15 @@
+Name: Pétanque Counter
+
+Short desc: Keep pétanque scores on phone and/or watch
+
+Full desc:
+Since in this era you always have your phone or Wear OS smartwatch with you, why not use it to keep the score.
+- simple interface
+- multiple phone layouts (symmetric, one-hand-left, one-hand-right)
+- stays above/outside the phone lock screen for simple access
+- Wear OS: standalone scoring, 1–6 points per mène
+
+This app is WallpaperWare: PostcardWare, by email.
+If you like it and want to say thanks, send me a 3840×1600 panorama of a view you love, and tell me where it is from.
+schnappiroc@gmail.com
+Examples: https://github.com/SiWoC/WallpaperWare/tree/main/samples
