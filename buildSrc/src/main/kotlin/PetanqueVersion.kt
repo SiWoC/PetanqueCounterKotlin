@@ -7,7 +7,7 @@
 object PetanqueVersion {
     const val MAJOR = 2
     const val MINOR = 0
-    const val PATCH = 0
+    const val PATCH = 1
 
     /** User-visible product version; same on phone and Wear. */
     val NAME: String = "$MAJOR.$MINOR.$PATCH"
